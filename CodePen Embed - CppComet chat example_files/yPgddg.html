@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!-- saved from url=(0139)file:///C:/Users/%D0%93%D0%BE%D1%81%D0%BF%D0%B0%D0%B4%D0%B8%D0%BD/Desktop/CodePen%20Embed%20-%20CppComet%20chat%20example_files/yPgddg.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  
+<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+<meta name="apple-mobile-web-app-title" content="CodePen">
+
+<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+
+<link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+
+
+  <title>CodePen - CppComet chat example</title>
+  
+  
+  <link rel="stylesheet" href="./bootstrap.min.css">
+  
+<style>
+#WebChatFormForm{
+  overflow: auto;
+  max-height: 220px;
+  width: 100%;
+  /*max-width: 600px;*/
+  overflow: auto;
+  max-height: 900px;
+ }
+
+#WebChatNameID{
+  margin-top:10px;
+}
+
+#WebChatTextID{
+  max-width: 600px;
+  max-height: 100px;
+  width: 600px;
+  margin-top:10px;
+  display:block;
+}
+</style>
+
+  
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+
+</head>
+
+<body translate="no">
+  <div id="web_chat_holder"><div style="border: 1px solid #ccc;padding:10px;"><div id="WebChatFormForm"><p><b>мывмч: </b>вчммчв</p><p><b>мывмччвм: </b>чвмчвм</p></div><input type="text" id="WebChatNameID" placeholder="Enter your name..."> <div id="answer_div" style="float:right;">Message delivered 5 recipients for 65ms</div><textarea id="WebChatTextID" placeholder="Send an online chat..."></textarea><div style="margin-bottom: 0px;margin-top: 10px;"><input type="button" style="width: 220px;" onclick="web_send_msg();" value="Send"> <div id="answer_error" style="float:right;"></div></div></div></div>
+    <script src="./stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js.pobrane"></script>
+
+  <script src="./jquery.min.js.pobrane"></script>
+<script src="./CometServerApi.js.pobrane"></script>
+<script src="./bootstrap.min.js.pobrane"></script>
+      <script id="rendered-js">
+var timer = new Date();
+function web_send_msg()
+{
+  // Getting values from input elements.
+  var text = $("#WebChatTextID").val();
+  var name = $("#WebChatNameID").val();
+
+  // Form cleaning
+  $("#WebChatTextID").val("");
+
+  // We will write the time at the time of sending the message
+  timer = new Date();
+
+  // Adding a sent message to the list of messages.
+  //$("#WebChatFormForm").append("<p><b>"+HtmlEncode(name)+": </b>"+HtmlEncode(text)+"</p>");
+
+  // Sending a message to the chat channel
+  CometServer().web_pipe_send("web_chat_pipe", { "text": text, "name": name });
+
+  // Notify the other tabs that we added a message to the chat
+  comet_server_signal().send_emit("AddToChat", { "text": text, "name": name });
+}
+
+
+// The function will be executed in after the page loads.
+$(document).ready(function ()
+{
+  // Create a chat form. Layout.
+  var html = "<div style=\"border: 1px solid #ccc;padding:10px;\" >" +
+  "<div id=\"WebChatFormForm\" ></div>" +
+  "<input type=\"text\" id=\"WebChatNameID\" placeholder=\"Enter your name...\" > <div id=\"answer_div\" style=\"float:right;\" ></div>" +
+  "<textarea id = \"WebChatTextID\" placeholder = \"Send an online chat...\" ></textarea>" +
+
+  "<div style=\"margin-bottom: 0px;margin-top: 10px;\">" +
+  "<input type=\"button\" style=\"width: 220px;\" onclick=\"web_send_msg();\" value=\"Send\" >" +
+  " <div id=\"answer_error\"  style=\"float:right;\" ></div>" +
+  "</div>" +
+  "</div>";
+  $("#web_chat_holder").html(html);
+
+  // Subscribe to the channel in which chat messages will be sent.
+  CometServer().subscription("web_chat_pipe", function (msg) {
+    console.log(["msg", msg]);
+
+    // dding a received message to the list of messages.
+    $("#WebChatFormForm").append("<p><b>" + HtmlEncode(msg.data.name) + ": </b>" + HtmlEncode(msg.data.text) + "</p>");
+  });
+
+  // We subscribe to the event of adding a message to the chat by us, so that if the chat is open in several tabs
+  // our message added on one tab was displayed on all the others without reloading the page
+  comet_server_signal().connect("AddToChat", function (msg) {
+    console.log(["msg", msg]);
+    // Adding a received message to the list of messages.
+    $("#WebChatFormForm").append("<p><b>" + HtmlEncode(msg.name) + ": </b>" + HtmlEncode(msg.text) + "</p>");
+  });
+
+  // We subscribe to the channel in which the delivery notifications of the sent messages will be sent.
+  CometServer().subscription("#web_chat_pipe", function (p)
+  {
+    // We will write the time at the time of receipt of the delivery report
+    var etime = new Date();
+
+    console.log(["answer_to_web_chat_pipe", p]);
+    $("#answer_div").html("Message delivered " + p.data.number_messages + " recipients for " + (etime.getTime() - timer.getTime()) + "ms");
+
+  });
+
+  // Download message history
+  // CometServer().get_pipe_log("web_chat_pipe");
+});
+
+
+function HtmlEncode(s)
+{
+  var el = document.createElement("div");
+  el.innerText = el.textContent = s;
+  s = el.innerHTML;
+  return s;
+}
+
+
+CometServer().start({ dev_id: 15 });
+//# sourceURL=pen.js
+    </script>
+
+  
+
+  <script src="./iframeRefreshCSS-4793b73c6332f7f14a9b6bba5d5e62748e9d1bd0b5c52d7af6376f3d1c625d7e.js.pobrane"></script>
+
+
+
+ 
+</body></html>

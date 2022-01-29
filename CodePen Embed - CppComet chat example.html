@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!-- saved from url=(0126)file:///C:/Users/%D0%93%D0%BE%D1%81%D0%BF%D0%B0%D0%B4%D0%B8%D0%BD/Desktop/CodePen%20Embed%20-%20CppComet%20chat%20example.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width">
+<title>CodePen Embed - CppComet chat example</title>
+<meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="FNmmsVudwnBKV3ZcMioNGJeZBWcg4sHdVfD4Nlrdq6s//tjBZIS3UXS1A8Pp0B9J/E9wuBjUeHfXTnPvLkw3Yw==">
+<link rel="stylesheet" media="all" href="./CodePen Embed - CppComet chat example_files/embed-00d7f1b1de25d2946cda76996d392050056e6151ca146529fd6fa071e1bfc615.css">
+<style>
+    .hide {
+      display: none !important;
+    }
+
+    #result-box {
+      background: #3d3d3e;
+      color: #ffffff;
+    }
+    .embed-footer,
+    .embed-nav {
+      background: #3d3d3e;
+      
+    }
+    .embed-nav .code-types a,
+    .embed-nav .result-button-list a,
+    .action-button {
+      color: #ffffff;
+      background-color: #666666;
+    }
+    .embed-nav .code-types a.active,
+    .embed-nav .result-button-list a.active,
+    .action-button.active {
+      background: #888888;
+      color: #ffffff;
+      box-shadow: inset 0px 3px #dddddd;
+    }
+    .embed-nav .logo-wrap .edit-on-codepen {
+      color: #ffffff;
+    }
+
+    .embed-nav svg {
+      stroke: #ffffff !important;
+    }
+  </style>
+<link rel="stylesheet" media="all" href="./CodePen Embed - CppComet chat example_files/twilight-9eb71b6edb11814ec9302f458eb8606e9eb58d14ef36cdf785d88aca31de5447.css">
+<meta name="monetization" content="$ilp.uphold.com/biyqg2MkQKbe">
+</head>
+<body id="the-body" style="border: 1px solid #555555; --borderWidth: 1px;" class="codepen-embed-body static results-active">
+
+<div id="output" data-border-style="thin" data-header="true">
+<div id="html-box" class="code-wrap code-box box " role="region" aria-label="HTML">
+<pre tabindex="0"><code data-lang="htmlmixed" id="actual-html-code" class=" cm-s-default cm-s-default"><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">div</span> <span class="cm-attribute">id</span>=<span class="cm-string">"web_chat_holder"</span><span class="cm-tag cm-bracket">&gt;</span><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">div</span><span class="cm-tag cm-bracket">&gt;</span></code></pre>
+</div>
+<div id="css-box" class="code-wrap code-box box " role="region" aria-label="CSS">
+<pre tabindex="0"><code data-lang="css" id="actual-css-code" class=" cm-s-default cm-s-default"> <span class="cm-builtin">#WebChatFormForm</span>{
+  <span class="cm-property">overflow</span>: <span class="cm-atom">auto</span>;
+  <span class="cm-property">max-height</span>: <span class="cm-number">220px</span>;
+  <span class="cm-property">width</span>: <span class="cm-number">100%</span>;
+  <span class="cm-comment">/*max-width: 600px;*/</span>
+  <span class="cm-property">overflow</span>: <span class="cm-atom">auto</span>;
+  <span class="cm-property">max-height</span>: <span class="cm-number">900px</span>;
+ }
+
+<span class="cm-builtin">#WebChatNameID</span>{
+  <span class="cm-property">margin-top</span>:<span class="cm-number">10px</span>;
+}
+
+<span class="cm-builtin">#WebChatTextID</span>{
+  <span class="cm-property">max-width</span>: <span class="cm-number">600px</span>;
+  <span class="cm-property">max-height</span>: <span class="cm-number">100px</span>;
+  <span class="cm-property">width</span>: <span class="cm-number">600px</span>;
+  <span class="cm-property">margin-top</span>:<span class="cm-number">10px</span>;
+  <span class="cm-property">display</span>:<span class="cm-atom">block</span>;
+}</code></pre>
+</div>
+<div id="js-box" class="code-wrap code-box box " role="region" aria-label="JS">
+<pre tabindex="0"><code data-lang="javascript" id="actual-js-code" class=" cm-s-default cm-s-default"><span class="cm-keyword">var</span> <span class="cm-def">timer</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">Date</span>();
+<span class="cm-keyword">function</span> <span class="cm-def">web_send_msg</span>()
+{
+    <span class="cm-comment">// Getting values from input elements.</span>
+    <span class="cm-keyword">var</span> <span class="cm-def">text</span> <span class="cm-operator">=</span> <span class="cm-variable">$</span>(<span class="cm-string">"#WebChatTextID"</span>).<span class="cm-property">val</span>();
+    <span class="cm-keyword">var</span> <span class="cm-def">name</span> <span class="cm-operator">=</span> <span class="cm-variable">$</span>(<span class="cm-string">"#WebChatNameID"</span>).<span class="cm-property">val</span>();
+ 
+    <span class="cm-comment">// Form cleaning</span>
+    <span class="cm-variable">$</span>(<span class="cm-string">"#WebChatTextID"</span>).<span class="cm-property">val</span>(<span class="cm-string">""</span>);  
+ 
+    <span class="cm-comment">// We will write the time at the time of sending the message</span>
+    <span class="cm-variable">timer</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">Date</span>();
+ 
+    <span class="cm-comment">// Adding a sent message to the list of messages.</span>
+    <span class="cm-comment">//$("#WebChatFormForm").append("&lt;p&gt;&lt;b&gt;"+HtmlEncode(name)+": &lt;/b&gt;"+HtmlEncode(text)+"&lt;/p&gt;");</span>
+ 
+    <span class="cm-comment">// Sending a message to the chat channel</span>
+    <span class="cm-variable">CometServer</span>().<span class="cm-property">web_pipe_send</span>(<span class="cm-string">"web_chat_pipe"</span>, {<span class="cm-string cm-property">"text"</span>:<span class="cm-variable-2">text</span>, <span class="cm-string cm-property">"name"</span>:<span class="cm-variable-2">name</span>});
+ 
+    <span class="cm-comment">// Notify the other tabs that we added a message to the chat</span>
+    <span class="cm-variable">comet_server_signal</span>().<span class="cm-property">send_emit</span>(<span class="cm-string">"AddToChat"</span>, {<span class="cm-string cm-property">"text"</span>:<span class="cm-variable-2">text</span>, <span class="cm-string cm-property">"name"</span>:<span class="cm-variable-2">name</span>})
+}
+ 
+ 
+<span class="cm-comment">// The function will be executed in after the page loads.</span>
+<span class="cm-variable">$</span>(<span class="cm-variable">document</span>).<span class="cm-property">ready</span>(<span class="cm-keyword">function</span>()
+{
+    <span class="cm-comment">// Create a chat form. Layout.</span>
+    <span class="cm-keyword">var</span> <span class="cm-def">html</span> <span class="cm-operator">=</span>  <span class="cm-string">"&lt;div style=\"border: 1px solid #ccc;padding:10px;\" &gt;"</span>
+            <span class="cm-operator">+</span> <span class="cm-string">"&lt;div id=\"WebChatFormForm\" &gt;&lt;/div&gt;"</span>
+      <span class="cm-operator">+</span> <span class="cm-string">"&lt;input type=\"text\" id=\"WebChatNameID\" placeholder=\"Enter your name...\" &gt; &lt;div id=\"answer_div\" style=\"float:right;\" &gt;&lt;/div&gt;"</span>
+            <span class="cm-operator">+</span> <span class="cm-string">"&lt;textarea id = \"WebChatTextID\" placeholder = \"Send an online chat...\" &gt;&lt;/textarea&gt;"</span>
+ 
+                  <span class="cm-operator">+</span> <span class="cm-string">"&lt;div style=\"margin-bottom: 0px;margin-top: 10px;\"&gt;"</span>
+                  <span class="cm-operator">+</span>    <span class="cm-string">"&lt;input type=\"button\" style=\"width: 220px;\" onclick=\"web_send_msg();\" value=\"Send\" &gt;"</span>
+                  <span class="cm-operator">+</span>    <span class="cm-string">" &lt;div id=\"answer_error\"  style=\"float:right;\" &gt;&lt;/div&gt;"</span>
+                  <span class="cm-operator">+</span> <span class="cm-string">"&lt;/div&gt;"</span>
+             <span class="cm-operator">+</span>  <span class="cm-string">"&lt;/div&gt;"</span>;
+    <span class="cm-variable">$</span>(<span class="cm-string">"#web_chat_holder"</span>).<span class="cm-property">html</span>(<span class="cm-variable-2">html</span>);
+ 
+    <span class="cm-comment">// Subscribe to the channel in which chat messages will be sent.</span>
+    <span class="cm-variable">CometServer</span>().<span class="cm-property">subscription</span>(<span class="cm-string">"web_chat_pipe"</span>, <span class="cm-keyword">function</span>(<span class="cm-def">msg</span>){
+        <span class="cm-variable">console</span>.<span class="cm-property">log</span>([<span class="cm-string">"msg"</span>, <span class="cm-variable-2">msg</span>]);
+      
+        <span class="cm-comment">// dding a received message to the list of messages.</span>
+        <span class="cm-variable">$</span>(<span class="cm-string">"#WebChatFormForm"</span>).<span class="cm-property">append</span>(<span class="cm-string">"&lt;p&gt;&lt;b&gt;"</span><span class="cm-operator">+</span><span class="cm-variable">HtmlEncode</span>(<span class="cm-variable-2">msg</span>.<span class="cm-property">data</span>.<span class="cm-property">name</span>)<span class="cm-operator">+</span><span class="cm-string">": &lt;/b&gt;"</span><span class="cm-operator">+</span><span class="cm-variable">HtmlEncode</span>(<span class="cm-variable-2">msg</span>.<span class="cm-property">data</span>.<span class="cm-property">text</span>)<span class="cm-operator">+</span><span class="cm-string">"&lt;/p&gt;"</span>);
+    });
+ 
+    <span class="cm-comment">// We subscribe to the event of adding a message to the chat by us, so that if the chat is open in several tabs</span>
+    <span class="cm-comment">// our message added on one tab was displayed on all the others without reloading the page</span>
+    <span class="cm-variable">comet_server_signal</span>().<span class="cm-property">connect</span>(<span class="cm-string">"AddToChat"</span>, <span class="cm-keyword">function</span>(<span class="cm-def">msg</span>){
+        <span class="cm-variable">console</span>.<span class="cm-property">log</span>([<span class="cm-string">"msg"</span>, <span class="cm-variable-2">msg</span>]);
+        <span class="cm-comment">// Adding a received message to the list of messages.</span>
+        <span class="cm-variable">$</span>(<span class="cm-string">"#WebChatFormForm"</span>).<span class="cm-property">append</span>(<span class="cm-string">"&lt;p&gt;&lt;b&gt;"</span><span class="cm-operator">+</span><span class="cm-variable">HtmlEncode</span>(<span class="cm-variable-2">msg</span>.<span class="cm-property">name</span>)<span class="cm-operator">+</span><span class="cm-string">": &lt;/b&gt;"</span><span class="cm-operator">+</span><span class="cm-variable">HtmlEncode</span>(<span class="cm-variable-2">msg</span>.<span class="cm-property">text</span>)<span class="cm-operator">+</span><span class="cm-string">"&lt;/p&gt;"</span>);
+    });
+ 
+    <span class="cm-comment">// We subscribe to the channel in which the delivery notifications of the sent messages will be sent.</span>
+    <span class="cm-variable">CometServer</span>().<span class="cm-property">subscription</span>(<span class="cm-string">"#web_chat_pipe"</span>, <span class="cm-keyword">function</span>(<span class="cm-def">p</span>)
+    {
+        <span class="cm-comment">// We will write the time at the time of receipt of the delivery report</span>
+        <span class="cm-keyword">var</span> <span class="cm-def">etime</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">Date</span>();
+ 
+        <span class="cm-variable">console</span>.<span class="cm-property">log</span>([<span class="cm-string">"answer_to_web_chat_pipe"</span>, <span class="cm-variable-2">p</span>]);
+        <span class="cm-variable">$</span>(<span class="cm-string">"#answer_div"</span>).<span class="cm-property">html</span>(<span class="cm-string">"Message delivered "</span><span class="cm-operator">+</span><span class="cm-variable-2">p</span>.<span class="cm-property">data</span>.<span class="cm-property">number_messages</span><span class="cm-operator">+</span><span class="cm-string">" recipients for "</span><span class="cm-operator">+</span> (<span class="cm-variable-2">etime</span>.<span class="cm-property">getTime</span>() <span class="cm-operator">-</span> <span class="cm-variable">timer</span>.<span class="cm-property">getTime</span>() )<span class="cm-operator">+</span><span class="cm-string">"ms"</span>);
+        
+    });
+ 
+   <span class="cm-comment">// Download message history</span>
+   <span class="cm-comment">// CometServer().get_pipe_log("web_chat_pipe");</span>
+});
+ 
+ 
+<span class="cm-keyword">function</span> <span class="cm-def">HtmlEncode</span>(<span class="cm-def">s</span>)
+{
+  <span class="cm-keyword">var</span> <span class="cm-def">el</span> <span class="cm-operator">=</span> <span class="cm-variable">document</span>.<span class="cm-property">createElement</span>(<span class="cm-string">"div"</span>);
+  <span class="cm-variable-2">el</span>.<span class="cm-property">innerText</span> <span class="cm-operator">=</span> <span class="cm-variable-2">el</span>.<span class="cm-property">textContent</span> <span class="cm-operator">=</span> <span class="cm-variable-2">s</span>;
+  <span class="cm-variable-2">s</span> <span class="cm-operator">=</span> <span class="cm-variable-2">el</span>.<span class="cm-property">innerHTML</span>;
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">s</span>;
+}
+
+
+<span class="cm-variable">CometServer</span>().<span class="cm-property">start</span>({<span class="cm-property">dev_id</span>:<span class="cm-number">15</span>})</code></pre>
+</div>
+<div id="result-box" class="code-box active zoom-1" role="region" aria-label="Result">
+<iframe allow="accelerometer; camera; encrypted-media; display-capture; geolocation; gyroscope; microphone; midi; clipboard-read; clipboard-write" allowfullscreen="true" allowpaymentrequest="true" allowtransparency="true" class="result-iframe  " frameborder="0" id="result-iframe" loading="lazy" name="CodePen Preview for CppComet chat example" sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation" scrolling="yes" title="CodePen Preview for CppComet chat example" data-src="https://cdpn.io/Levhav/fullembedgrid/yPgddg?animations=run&amp;type=embed" src="./CodePen Embed - CppComet chat example_files/yPgddg.html">
+  </iframe>
+</div>
+<div id="about-box">
+<div class="about-container">
+<div class="about-user">
+<a href="https://codepen.io/Levhav" target="_blank" rel="noopener"><img src="./CodePen Embed - CppComet chat example_files/default.png" loading="lazy" alt="" class="about-image"></a>
+<div class="about-user-info">
+<p>
+This Pen is owned by <a href="https://codepen.io/Levhav" target="_blank" rel="noopener">Trapenok Victor</a> on <a href="https://codepen.io/" target="_blank" rel="noopener">CodePen</a>.
+</p>
+<p>
+<a href="https://codepen.io/Levhav" target="_blank" rel="noopener" class="about-user-more">
+See more by @Levhav on CodePen
+</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="resources-box" class="resources-box">
+<h3>External CSS</h3>
+<ol class="list-of-resources">
+<li>
+<a href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" target="_blank">https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css</a>
+</li>
+</ol>
+<h3>External JavaScript</h3>
+<ol class="list-of-resources">
+<li>
+<a href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" target="_blank">https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js</a>
+</li>
+<li>
+<a href="https://comet-server.com/CometServerApi.js" target="_blank">https://comet-server.com/CometServerApi.js</a>
+</li>
+<li>
+<a href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" target="_blank">https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js</a>
+</li>
+</ol>
+</div>
+</div>
+
+<script nonce="">
+    __processedPen = {"html":"&lt;div id=&quot;web_chat_holder&quot;&gt;&lt;/div&gt;","css":"#WebChatFormForm{\n  overflow: auto;\n  max-height: 220px;\n  width: 100%;\n  /*max-width: 600px;*/\n  overflow: auto;\n  max-height: 900px;\n }\n\n#WebChatNameID{\n  margin-top:10px;\n}\n\n#WebChatTextID{\n  max-width: 600px;\n  max-height: 100px;\n  width: 600px;\n  margin-top:10px;\n  display:block;\n}","js":"var timer = new Date();\nfunction web_send_msg()\n{\n  // Getting values from input elements.\n  var text = $(&quot;#WebChatTextID&quot;).val();\n  var name = $(&quot;#WebChatNameID&quot;).val();\n\n  // Form cleaning\n  $(&quot;#WebChatTextID&quot;).val(&quot;&quot;);\n\n  // We will write the time at the time of sending the message\n  timer = new Date();\n\n  // Adding a sent message to the list of messages.\n  //$(&quot;#WebChatFormForm&quot;).append(&quot;&lt;p&gt;&lt;b&gt;&quot;+HtmlEncode(name)+&quot;: &lt;/b&gt;&quot;+HtmlEncode(text)+&quot;&lt;/p&gt;&quot;);\n\n  // Sending a message to the chat channel\n  CometServer().web_pipe_send(&quot;web_chat_pipe&quot;, { &quot;text&quot;: text, &quot;name&quot;: name });\n\n  // Notify the other tabs that we added a message to the chat\n  comet_server_signal().send_emit(&quot;AddToChat&quot;, { &quot;text&quot;: text, &quot;name&quot;: name });\n}\n\n\n// The function will be executed in after the page loads.\n$(document).ready(function ()\n{\n  // Create a chat form. Layout.\n  var html = &quot;&lt;div style=\\&quot;border: 1px solid #ccc;padding:10px;\\&quot; &gt;&quot; +\n  &quot;&lt;div id=\\&quot;WebChatFormForm\\&quot; &gt;&lt;/div&gt;&quot; +\n  &quot;&lt;input type=\\&quot;text\\&quot; id=\\&quot;WebChatNameID\\&quot; placeholder=\\&quot;Enter your name...\\&quot; &gt; &lt;div id=\\&quot;answer_div\\&quot; style=\\&quot;float:right;\\&quot; &gt;&lt;/div&gt;&quot; +\n  &quot;&lt;textarea id = \\&quot;WebChatTextID\\&quot; placeholder = \\&quot;Send an online chat...\\&quot; &gt;&lt;/textarea&gt;&quot; +\n\n  &quot;&lt;div style=\\&quot;margin-bottom: 0px;margin-top: 10px;\\&quot;&gt;&quot; +\n  &quot;&lt;input type=\\&quot;button\\&quot; style=\\&quot;width: 220px;\\&quot; onclick=\\&quot;web_send_msg();\\&quot; value=\\&quot;Send\\&quot; &gt;&quot; +\n  &quot; &lt;div id=\\&quot;answer_error\\&quot;  style=\\&quot;float:right;\\&quot; &gt;&lt;/div&gt;&quot; +\n  &quot;&lt;/div&gt;&quot; +\n  &quot;&lt;/div&gt;&quot;;\n  $(&quot;#web_chat_holder&quot;).html(html);\n\n  // Subscribe to the channel in which chat messages will be sent.\n  CometServer().subscription(&quot;web_chat_pipe&quot;, function (msg) {\n    console.log([&quot;msg&quot;, msg]);\n\n    // dding a received message to the list of messages.\n    $(&quot;#WebChatFormForm&quot;).append(&quot;&lt;p&gt;&lt;b&gt;&quot; + HtmlEncode(msg.data.name) + &quot;: &lt;/b&gt;&quot; + HtmlEncode(msg.data.text) + &quot;&lt;/p&gt;&quot;);\n  });\n\n  // We subscribe to the event of adding a message to the chat by us, so that if the chat is open in several tabs\n  // our message added on one tab was displayed on all the others without reloading the page\n  comet_server_signal().connect(&quot;AddToChat&quot;, function (msg) {\n    console.log([&quot;msg&quot;, msg]);\n    // Adding a received message to the list of messages.\n    $(&quot;#WebChatFormForm&quot;).append(&quot;&lt;p&gt;&lt;b&gt;&quot; + HtmlEncode(msg.name) + &quot;: &lt;/b&gt;&quot; + HtmlEncode(msg.text) + &quot;&lt;/p&gt;&quot;);\n  });\n\n  // We subscribe to the channel in which the delivery notifications of the sent messages will be sent.\n  CometServer().subscription(&quot;#web_chat_pipe&quot;, function (p)\n  {\n    // We will write the time at the time of receipt of the delivery report\n    var etime = new Date();\n\n    console.log([&quot;answer_to_web_chat_pipe&quot;, p]);\n    $(&quot;#answer_div&quot;).html(&quot;Message delivered &quot; + p.data.number_messages + &quot; recipients for &quot; + (etime.getTime() - timer.getTime()) + &quot;ms&quot;);\n\n  });\n\n  // Download message history\n  // CometServer().get_pipe_log(&quot;web_chat_pipe&quot;);\n});\n\n\nfunction HtmlEncode(s)\n{\n  var el = document.createElement(&quot;div&quot;);\n  el.innerText = el.textContent = s;\n  s = el.innerHTML;\n  return s;\n}\n\n\nCometServer().start({ dev_id: 15 });"};
+    __preprocessors = {
+      "html": "none",
+      "css": "none",
+      "js": "none"
+    };
+    __preprocessorNames = {
+      "html": "HTML",
+      "css": "CSS",
+      "js": "JS"
+    };
+    __editable = false;
+    __embed_prefill = false;
+  </script>
+<script src="./CodePen Embed - CppComet chat example_files/embed-e369dee9e85a1a53638c341339102b70938d2f103a2252bc1bf4c7ec1dc26212.js.pobrane"></script>
+
+
+</body></html>
